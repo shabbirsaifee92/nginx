@@ -53,12 +53,13 @@ def find(yaml_files)
 end
 
 def commit_to_control(argo_file)
-  yaml_string = File.read argo_file
-  data = YAML.load yaml_string
-  data["metadata"]["annotations"]["reservedBy"] = "myapp/mybranch"
-  File.write(argo_file, data.to_yaml)
+  puts File.read argo_file
+  # yaml_string = File.read argo_file
+  # data = YAML.load yaml_string
+  # data["metadata"]["annotations"]["reservedBy"] = "myapp/mybranch"
+  # File.write(argo_file, data.to_yaml)
 
-  puts(File.read argo_file)
+  # puts(File.read argo_file)
 end
 
 # Main script
