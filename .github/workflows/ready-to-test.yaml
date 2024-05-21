@@ -30,4 +30,4 @@ jobs:
     #   # if you don't use Bundler or don't have a Gemfile, you can skip this step
 
     - name: Run Ruby script
-      run: ruby scripts/ready-to-test.rb
+      run: ruby scripts/ready-to-test.rb ${{ secrets.PAT }}
