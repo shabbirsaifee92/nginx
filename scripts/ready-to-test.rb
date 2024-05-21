@@ -40,7 +40,7 @@ def find(yaml_files)
   already_reserved_by_branch = yaml_files.find do |file|
     yaml_string = File.read file
     data = YAML.load yaml_string
-    data.dig("metadata","annotations","reservedBy") && data.dig("metadata","annotations","reservedBy") == "myapp/mybranch"
+    # data.dig("metadata","annotations","reservedBy") && data.dig("metadata","annotations","reservedBy") == "myapp/mybranch"
   end
 
   return already_reserved_by_branch if already_reserved_by_branch
@@ -48,7 +48,7 @@ def find(yaml_files)
   available = yaml_files.find do |file|
     yaml_string = File.read file
     data = YAML.load yaml_string
-    data.dig("metadata","annotations","reservedBy").nil? || data.dig("metadata","annotations","reservedBy").empty?
+    # data.dig("metadata","annotations","reservedBy").nil? || data.dig("metadata","annotations","reservedBy").empty?
   end
 end
 
