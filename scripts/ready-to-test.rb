@@ -4,6 +4,25 @@ require 'json'
 require 'uri'
 require "base64"
 
+def github_api_put(url, body)
+  uri = URI(url)
+  request = Net::HTTP::Put.new(uri)
+  request['Authorization'] = "token #{ARGV[0]}"
+  request['User-Agent'] = 'Ruby Script'
+  request['Content-Type'] = 'application/json'
+  request.body = body.to_json
+
+  response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+    http.request(request)
+  end
+
+  unless response.is_a?(Net::HTTPSuccess)
+    raise "HTTP request failed: #{response.code} #{response.message} - #{response.body}"
+  end
+
+  JSON.parse(response.body)
+end
+
 def github_api_get(url)
   uri = URI(url)
   request = Net::HTTP::Get.new(uri)
@@ -47,16 +66,16 @@ end
 
 def update_file_content(argo_file, new_content, url)
   sha = argo_file['sha']
-  puts sha
-  # update_data = {
-  #   message: "Update #{FILE_PATH}",
-  #   content: Base64.strict_encode64(new_content),
-  #   sha: sha,
-  #   branch: 'main'
-  # }
+  # puts sha
+  update_data = {
+    message: "Update #{argo_file['path']} for testing",
+    content: Base64.strict_encode64(new_content),
+    sha: sha,
+    branch: 'main'
+  }
 
-  # url = "https://api.github.com/repos/#{GITHUB_OWNER}/#{GITHUB_REPO}/contents/#{FILE_PATH}"
-  # github_api_put(url, update_data)
+  url = "https://api.github.com/repos/shameson/argo-demo/contents/#{argo_file['path']}"
+  github_api_put(url, update_data)
 end
 
 def commit_to_control(argo_file)
