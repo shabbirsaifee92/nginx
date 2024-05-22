@@ -86,7 +86,7 @@ def commit_to_control(argo_file)
 
   update_file_content(argo_file, data.to_yaml, "https://api.github.com/repos/shameson/argo-demo/contents/#{argo_file['path']}")
 
-  version_file = "helm/myapp/environments/#{argo_file['name'].gsub(/.yaml/,'')/version.yaml}"
+  version_file = "helm/myapp/environments/#{argo_file['name'].gsub(/.yaml/,'')}/version.yaml"
   yaml_string = Base64.decode64(fetch_content("https://api.github.com/repos/shameson/argo-demo/contents/#{version_file}")["content"])
   data = YAML.load yaml_string
   data["deployment"]["image"]["tag"] = "x.x.x"
