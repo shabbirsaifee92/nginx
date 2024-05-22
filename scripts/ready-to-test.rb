@@ -79,6 +79,7 @@ def update_file_content(argo_file, new_content, url)
 end
 
 def commit_to_control(argo_file)
+  puts argo_file
   yaml_string = Base64.decode64(fetch_content("https://api.github.com/repos/shameson/argo-demo/contents/#{argo_file['path']}")["content"])
   data = YAML.load yaml_string
   h = {"annotations" => {"reservedBy"=> "myapp/mybranch" } }
@@ -86,11 +87,12 @@ def commit_to_control(argo_file)
 
   update_file_content(argo_file, data.to_yaml, "https://api.github.com/repos/shameson/argo-demo/contents/#{argo_file['path']}")
 
-  version_file = "helm/myapp/environments/#{argo_file['name'].gsub(/.yaml/,'')}/version.yaml"
-  yaml_string = Base64.decode64(fetch_content("https://api.github.com/repos/shameson/argo-demo/contents/#{version_file}")["content"])
+  version_file_path = "helm/myapp/environments/#{argo_file['name'].gsub(/.yaml/,'')}/version.yaml"
+  version_file = fetch_content("https://api.github.com/repos/shameson/argo-demo/contents/#{version_file_path}")
+  yaml_string = Base64.decode64(version_file["content"])
   data = YAML.load yaml_string
   data["deployment"]["image"]["tag"] = "x.x.x"
-
+  # puts version_file
   update_file_content(version_file, data.to_yaml, "https://api.github.com/repos/shameson/argo-demo/contents/#{version_file}")
 end
 
