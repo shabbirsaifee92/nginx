@@ -1,10 +1,10 @@
 name: Print on Merge to Main
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - main
-
 jobs:
   run-ruby:
     runs-on: ubuntu-latest
