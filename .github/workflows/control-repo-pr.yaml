@@ -1,0 +1,27 @@
+name: Print on Merge to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-ruby:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
+
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        bundle install
+
+    - name: Run Ruby script
+      run: ruby scripts/control-repo-pr.rb ${{ secrets.PAT }} ${GITHUB_REF##*/}
