@@ -42,6 +42,7 @@ begin
   `git config --global user.email "shabbirsaifee91@gmail.com"`
   `git config --global user.name "Shabbir Saifee"`
   `git checkout -b #{branch_name}`
+  `touch tmp/hello.txt`
   `git add tmp/hello.txt`
   `git commit -m "Add hello.txt"`
   `git push origin #{branch_name}`
