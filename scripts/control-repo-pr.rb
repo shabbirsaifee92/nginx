@@ -1,15 +1,9 @@
-require 'yaml'
-require 'net/http'
-require 'json'
-require 'uri'
-require "base64"
-
 #!/usr/bin/env ruby
 
 require 'octokit'
 
 # Ensure the PAT (Personal Access Token) is passed as an argument
-if ARGV.length != 1
+if ARGV.length != 2
   puts "Usage: ruby ready-to-test.rb <PAT>"
   exit 1
 end
