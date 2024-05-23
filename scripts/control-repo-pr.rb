@@ -2,12 +2,6 @@
 
 require 'octokit'
 
-# Ensure the PAT (Personal Access Token) is passed as an argument
-if ARGV.length != 2
-  puts "Usage: ruby ready-to-test.rb <PAT>"
-  exit 1
-end
-
 # Read the Personal Access Token from the command line argument
 pat = ARGV[0]
 source_branch = ARGV[1]
